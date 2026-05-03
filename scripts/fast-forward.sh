@@ -47,7 +47,7 @@ function github_event {
     while [ "$#" -gt 0 ]
     do
         VALUE=$(jq -r "${1}" <"${GITHUB_EVENT_PATH}")
-        if [ -n "${VALUE}" && "${VALUE}" != "null" ]
+        if [ -n "${VALUE}" ] && [ "${VALUE}" != "null" ]
         then
             echo "${VALUE}"
             return 0
@@ -86,7 +86,7 @@ function github_pull_request {
     while [ "$#" -gt 0 ]
     do
         VALUE=$(jq -r "$1" <${GITHUB_PR})
-        if [ -n "${VALUE}" && "${VALUE}" != null]
+        if [ -n "${VALUE}" ] && [ "${VALUE}" != null]
         then
             echo "${VALUE}"
             break
