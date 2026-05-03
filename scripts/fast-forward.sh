@@ -158,11 +158,9 @@ LOG=$(mktemp)
     else
         echo -n "Checking if we can "
     fi
-    printf " fast forward \`%s\` (%s) to \`%s\` (%s).\n" \
-        "${BASE_REF}" "${BASE_SHA}" "${PR_REF}" "${PR_SHA}"
+    echo " fast forward \`${BASE_REF}\` (${BASE_SHA}) to \`${PR_REF}\` (${PR_SHA})."
     echo
-    printf "Target branch (\`%s\`):" \
-        "${BASE_REF}"
+    echo "Target branch (\`${BASE_REF}\`):"
     echo
     echo '```shell'
     
@@ -170,8 +168,7 @@ LOG=$(mktemp)
 
     echo '```'
     echo
-    printf "Pull request (\`%s\`):" \
-        "${PR_REF}"
+    echo "Pull request (\`${PR_REF}\`):"
     echo
     echo '```shell'
 
