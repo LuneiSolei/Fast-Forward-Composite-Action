@@ -65,7 +65,7 @@ function github_pull_request {
         github_event .pull_request >>${GITHUB_PR}
         if [ ! -s "${GITHUB_PR}" ]
         then
-            PR_URL="$(github_event .issue.pull_request.url)"
+            PR_URL="$(github_event .pull_request.url)"
             if [ -z "${PR_URL}" ]
             then
                 echo "Unable to find pull request's context."
