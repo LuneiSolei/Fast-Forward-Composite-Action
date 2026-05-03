@@ -79,8 +79,6 @@ function github_pull_request {
     -H "Accept: application/vnd.github+json" \
     -H "Authorization: Bearer ${GITHUB_TOKEN}" \
     -H "X-GitHub-Api-Version: 2026-03-10" \
-
-    # Save to the temp file we created earlier
     "${PR_URL}" >${GITHUB_PR}
 
     # Do some debug logging, if enabled
