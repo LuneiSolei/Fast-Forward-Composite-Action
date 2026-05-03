@@ -158,7 +158,7 @@ LOG=$(mktemp)
     else
         echo -n "Checking if we can "
     fi
-    echo " fast forward \`${BASE_REF}\` (${BASE_SHA}) to \`${PR_REF}\` (${PR_SHA})."
+    echo " fast forward (\`${BASE_REF}\` (${BASE_SHA}) to \`${PR_REF}\` (${PR_SHA})."
     echo
     echo "Target branch (\`${BASE_REF}\`):"
     echo
