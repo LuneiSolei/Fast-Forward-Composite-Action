@@ -4,8 +4,8 @@ set -e
 
 # Generate comment header. @&ZeroWidthSpace to prevent @-mention notifications
 cat >> ${GITHUB_STEP_SUMMARY} << EOM
-  Triggered from $(${GITHUB_ACTION_PATH}/scripts/github-event.sh .comment.html_url .pull_request.html_url)
-  by [@&ZeroWidthSpace;${GITHUB_ACTOR}](https://github.com/$GITHUB_ACTOR).
+Triggered from $(${GITHUB_ACTION_PATH}/scripts/github-event.sh .comment.html_url .pull_request.html_url)
+by [@&ZeroWidthSpace;${GITHUB_ACTOR}](https://github.com/$GITHUB_ACTOR).
 EOM
 
 # Get the base branch name
