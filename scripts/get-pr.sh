@@ -50,7 +50,7 @@ echo "HEAD_SHA=${HEAD_SHA}" >> ${GITHUB_ENV}
 if ! git cat-file -e "${HEAD_SHA}" 2>/dev/null
 then
   # If PR is from a fork, fetch the fork's contents too
-  CLONE_URL=$(${GITHUB_ACTION_PATH}/scripts/github_pull_request.sh .head.repo.clone_url)
+  CLONE_URL=$(${GITHUB_ACTION_PATH}/scripts/github-pull-request.sh .head.repo.clone_url)
 
   # Set up credentials again, but this time for the fork
   git config --global credential.helper store
