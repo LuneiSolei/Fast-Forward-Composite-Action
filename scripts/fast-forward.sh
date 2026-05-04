@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 set -e
 
@@ -17,16 +17,16 @@ LOG=$(mktemp)
   git branch -f "pull_request/${HEAD_REF}" "${HEAD_SHA}"
 
   # Display dynamic message depending on if "merge" is enabled
-  case "$"{AUTO_MERGE}" in
+  case "${AUTO_MERGE}" in
     "true")
       echo -n "Trying to "
       ;;
-    "false)
+    "false")
       echo -n "Checking if we can "
       ;;
   esac
   
-  echo " fast forward \`${BASE_REF}\` (${BASE_SHA}) to \`${HEAD_REF}\` (${HEAD_SHA})."
+  echo "fast forward \`${BASE_REF}\` (${BASE_SHA}) to \`${HEAD_REF}\` (${HEAD_SHA})."
   echo
 
   # Show the current state of the target branch
@@ -52,7 +52,8 @@ LOG=$(mktemp)
   elif [[ "${AUTO_MERGE}" == "true" ]]
   then
     ./show-is-possible.sh
-} 2>&1 | tee -a ${GITHUB_STEP_SUMMARY} "${LOG}"
+  fi
+} 2>&1 >> "${GITHUB_STEP_SUMMARY}" "${LOG}"
 
 COMMENT_CONTENT=$(mktemp)
 jq -n --rawfile log "$LOG" '{ "body": $log }' >"${COMMENT_CONTENT}"
