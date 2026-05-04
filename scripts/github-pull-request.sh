@@ -7,7 +7,7 @@ GITHUB_PR=$(mktemp)
 
 # Returns the first non-null value from the provided paths
 # Attempt to get PR URL from issue_comment first, then pull_request event data
-PR_URL="$(./github_event.sh .issue.pull_request.url .pull_request.url)" || {
+PR_URL="$(./github-event.sh .issue.pull_request.url .pull_request.url)" || {
     # Nothing was found
     echo "::error::Unable to find pull request's context." >&2
     exit 1
