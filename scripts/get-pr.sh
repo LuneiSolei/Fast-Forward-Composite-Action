@@ -3,8 +3,7 @@
 set -e
 
 # Generate comment header. @&ZeroWidthSpace to prevent @-mention notifications
-echo "Triggered from $(${GITHUB_ACTION_PATH}/scripts/github-event.sh .comment.html_url .pull_request.html_url)
-  by [@&ZeroWidthSpace;${GITHUB_ACTOR}](https://github.com/$GITHUB_ACTOR)." >> ${GITHUB_STEP_SUMMARY}
+echo "Triggered from $(${GITHUB_ACTION_PATH}/scripts/github-event.sh .comment.html_url .pull_request.html_url) by [@&ZeroWidthSpace;${GITHUB_ACTOR}](https://github.com/$GITHUB_ACTOR)." >> ${GITHUB_STEP_SUMMARY}
 
 # Get the base branch name
 BASE_REF=$(${GITHUB_ACTION_PATH}/scripts/github-pull-request.sh .base.ref)
