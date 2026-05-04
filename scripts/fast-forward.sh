@@ -2,6 +2,8 @@
 
 set -e
 
+./prechecks.sh
+
 # Returns the value of the first key in the github.event data structure that is not null.
 function github_event {
     while [ "$#" -gt 0 ]
