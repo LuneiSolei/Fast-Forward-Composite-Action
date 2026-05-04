@@ -53,7 +53,7 @@ LOG=$(mktemp)
   then
     ./show-is-possible.sh
   fi
-} 2>&1 >> "${GITHUB_STEP_SUMMARY}" "${LOG}"
+} 2>&1 | tee -a "${GITHUB_STEP_SUMMARY}" "${LOG}"
 
 COMMENT_CONTENT=$(mktemp)
 jq -n --rawfile log "$LOG" '{ "body": $log }' >"${COMMENT_CONTENT}"
