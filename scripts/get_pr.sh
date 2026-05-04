@@ -8,10 +8,12 @@ echo
 
 # Get the base branch name
 BASE_REF=$(./github_pull_request.sh .base.ref)
+echo "BASE_REF=${BASE_REF}" >> ${GITHUB_ENV}
 
 # Get the base branch SHA. 
 # If .git doesn't exist or branch is null, returns an empty string.
 BASE_SHA="$(test -d .git && git rev-parse origin/$BASE_REF 2>/dev/null || true)"
+echo "BASE_SHA=${BASE_SHA}" >> ${GITHUB_ENV}
 
 # Could not resolve the SHA, clone the repository
 if [[ -z "${BASE_SHA}" ]]
@@ -38,7 +40,10 @@ fi
 
 # Get the head branch ref and commit SHA
 HEAD_REF=$(./github_pull_request.sh .head.ref)
+echo "HEAD_REF=${HEAD_REF}" >> ${GITHUB_ENV}
+
 HEAD_SHA=$(./github_pull_request.sh .head.sha)
+echo "HEAD_SHA=${HEAD_SHA}" >> ${GITHUB_ENV}
 
 # Check if we have the PR commit already.
 # Required if we're in a fork.
