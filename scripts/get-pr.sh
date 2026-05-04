@@ -7,12 +7,12 @@ echo "Triggered from $(${GITHUB_ACTION_PATH}/scripts/github-event.sh .comment.ht
 
 # Get the base branch name
 BASE_REF=$(${GITHUB_ACTION_PATH}/scripts/github-pull-request.sh .base.ref)
-echo "BASE_REF=${BASE_REF}" >> ${GITHUB_ENV}
+echo "base-ref=${BASE_REF}" >> ${GITHUB_OUTPUT}
 
 # Get the base branch SHA. 
 # If .git doesn't exist or branch is null, returns an empty string.
 BASE_SHA="$(test -d .git && git rev-parse origin/$BASE_REF 2>/dev/null || true)"
-echo "BASE_SHA=${BASE_SHA}" >> ${GITHUB_ENV}
+echo "base-sha=${BASE_SHA}" >> ${GITHUB_OUTPUT}
 
 # Could not resolve the SHA, clone the repository
 if [[ -z "${BASE_SHA}" ]]
@@ -39,10 +39,10 @@ fi
 
 # Get the head branch ref and commit SHA
 HEAD_REF=$(${GITHUB_ACTION_PATH}/scripts/github-pull-request.sh .head.ref)
-echo "HEAD_REF=${HEAD_REF}" >> ${GITHUB_ENV}
+echo "head-ref=${HEAD_REF}" >> ${GITHUB_OUTPUT}
 
 HEAD_SHA=$(${GITHUB_ACTION_PATH}/scripts/github-pull-request.sh .head.sha)
-echo "HEAD_SHA=${HEAD_SHA}" >> ${GITHUB_ENV}
+echo "head-sha=${HEAD_SHA}" >> ${GITHUB_OUTPUT}
 
 # Check if we have the PR commit already.
 # Required if we're in a fork.
