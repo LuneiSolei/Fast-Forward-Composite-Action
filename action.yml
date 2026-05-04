@@ -44,6 +44,9 @@ runs:
         GITHUB_TOKEN: ${{ inputs.github_token }}
         AUTO_MERGE: ${{ inputs.auto_merge }}
       run: "${{ github.action_path }}/scripts/prechecks.sh"
+    - id: get-pr
+      shell: bash
+      run: "${{ github.action_path }}/scripts/get-pr.sh"    
       
     - id: fast-forward
       shell: bash
