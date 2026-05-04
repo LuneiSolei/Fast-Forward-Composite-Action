@@ -3,45 +3,53 @@ description: Fast forward the target branch from a pull request.
 author: Lunei Solei
 inputs:
   github_token:
-    description: The GitHub token.
+    description: The GitHub token for this action to use.
     required: true
-  merge:
-    description: Whether to automatically fast forward the target branch once a pull request is eligible to do so.
+  auto_merge:
+    description: >
+      Boolean that determines the target branch should be automatically
+      fast forwarded after determining that a pull request is eligible to do so.
     default: false
   comment:
     description: >
-      If set to "always", this posts a comment to the pull request 
-      indicating whether it is possible to fast-forward the target branch, and, 
-      if merge is true, whether fast forwarding succeeded.
+      "always" - Posts a comment to the pull request indicating whether
+      it is possible to fast-forward the target branch, and, if merge 
+      is true, whether fast forwarding succeeded.
 
-      If set to "on-error", a comment is only posted if an error occurs.
+      "on-error" - A comment is only posted if an error occurs.
 
-      If set to "never", no comment is posted. The comment is still available 
-      via the comment output variable, and in the step's summary.
+      "never" - No comment is posted. The comment is still available 
+      via the comment output variable and in the step's summary.
     default: on-error
   debug:
-    description: Enables debugging output. If set to 1 or true, increases the workflow's verbosity. This may also execute some additional RPCs, and so should normally be disabled.
+    description: If set to true, increases the workflow's verbosity. This may also execute some additional RPCs, and so should normally be disabled.
     default: 0
 
 outputs:
   comment:
-    description: A comment explaining whether fast forwarding is possible, and, if `merge` is true, whether it was successful. The comment is a JSON document with a single field, `body`.
+    description: > 
+      A comment explaining whether fast forwarding is possible, and, 
+      if `merge` is true, whether it was successful. The comment is 
+      a JSON document with a single field called `body`.
     value: "${{ steps.fast-forward.outputs.comment }}"
 
 runs:
   using: composite
   steps:
+    - id: prechecks
+      shell: bash
+      env: 
+        DEBUG: ${{ inputs.debug }}
+        COMMENT: ${{ inputs.comment }}
+        GITHUB_TOKEN: ${{ inputs.github_token }}
+        AUTO_MERGE: ${{ inputs.auto_merge }}
+      run: "${{ github.action_path }}/scripts/prechecks.sh"
+      
     - id: fast-forward
       shell: bash
       env:
         DEBUG: ${{ inputs.debug }}
         COMMENT: ${{ inputs.comment }}
-      run: |
-        export GITHUB_TOKEN="${{ inputs.github_token }}"
-
-        if [[ "${{ inputs.merge }}" == "true" ]]
-        then
-          "${{ github.action_path }}/scripts/fast-forward.sh" --merge
-        else
-          "${{ github.action_path }}/scripts/fast-forward.sh"
-        fi
+        GITHUB_TOKEN: ${{ inputs.github_token }}
+        AUTO_MERGE: ${{ inputs.auto_merge }}
+      run: "${{ github.action_path}}/scripts/fast-forward.sh"
