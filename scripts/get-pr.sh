@@ -21,10 +21,11 @@ printf 'base-ref=%s\n' "${BASE_REF}" >> "${GITHUB_OUTPUT}"
 BASE_SHA="$(test -d .git && git rev-parse origin/${BASE_REF} 2>/dev/null || true)"
 printf 'base-sha=%s\n' "${BASE_SHA}" >> "${GITHUB_OUTPUT}"
 
+echo "WE'RE HERE"
+
 # Could not resolve the SHA, clone the repository
 if [[ -z "${BASE_SHA}" ]]
 then
-  echo "WE'RE HERE"
   CLONE_URL=$(${GITHUB_ACTION_PATH}/scripts/github-pull-request.sh .base.repo.clone_url)
   approve_git_creds "${CLONE_URL}" "${GITHUB_ACTOR}" "${GITHUB_TOKEN}"
 
