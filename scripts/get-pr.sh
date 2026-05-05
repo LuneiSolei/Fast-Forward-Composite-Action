@@ -16,6 +16,7 @@ printf '%s\n' "Triggered from $(${GITHUB_ACTION_PATH}/scripts/github-event.sh .c
 BASE_REF=$(${GITHUB_ACTION_PATH}/scripts/github-pull-request.sh .base.ref)
 printf 'base-ref=%s\n' "${BASE_REF}" >> "${GITHUB_OUTPUT}"
 
+echo "WE'VE MADE IT HERE"
 # Get the base branch SHA. 
 # If .git doesn't exist or branch is null, returns an empty string.
 BASE_SHA="$(test -d .git && git rev-parse origin/${BASE_REF} 2>/dev/null || true)"
