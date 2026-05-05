@@ -13,6 +13,8 @@ PR_URL="$(${GITHUB_ACTION_PATH}/scripts/github-event.sh .issue.pull_request.url 
   exit 1
 }
 
+echo "WE'RE HERE"
+
 # Using our newly found URL, get the full PR object
 curl --silent --show-error --location --globoff \
 -X GET \
