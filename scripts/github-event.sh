@@ -15,4 +15,5 @@ do
     shift
 done
 
+echo "::error::No non-null value found in the provided event path '${GITHUB_EVENT_PATH}'"
 exit 1
