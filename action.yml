@@ -49,11 +49,11 @@ runs:
       env:
         GITHUB_TOKEN: ${{ inputs.github_token }}
       run: "${{ github.action_path }}/scripts/get-pr.sh"
-    - id: has-perms
+    - id: check-perms
       shell: bash
       env:
         GITHUB_TOKEN: ${{ inputs.github_token }}
-      run: "${{ github.action_path }}/scripts/has-perms.sh"
+      run: "${{ github.action_path }}/scripts/check-perms.sh"
       
     - id: fast-forward
       shell: bash
