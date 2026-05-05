@@ -11,7 +11,6 @@ approve_git_creds() {
 printf '%s\n' "Triggered from $(${GITHUB_ACTION_PATH}/scripts/github-event.sh .comment.html_url \
 .pull_request.html_url) by [@&ZeroWidthSpace;${GITHUB_ACTOR}](https://github.com/$GITHUB_ACTOR)." \
 >> "${GITHUB_STEP_SUMMARY}"
-echo "WE'VE MADE IT HERE" >> >&2
 
 # Get the base branch name
 BASE_REF=$(${GITHUB_ACTION_PATH}/scripts/github-pull-request.sh .base.ref)
