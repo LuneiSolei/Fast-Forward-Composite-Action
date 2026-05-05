@@ -12,13 +12,11 @@ printf '%s\n' "Triggered from $(${GITHUB_ACTION_PATH}/scripts/github-event.sh .c
 .pull_request.html_url) by [@&ZeroWidthSpace;${GITHUB_ACTOR}](https://github.com/$GITHUB_ACTOR)." \
 >> "${GITHUB_STEP_SUMMARY}"
 
-echo "script path: ${BASH_SOURCE[0]}"; ls -l "${BASH_SOURCE[0]}"
+echo "calling: ${GITHUB_ACTION_PATH}/scripts/github-pull-request.sh" ls -l "${GITHUB_ACTION_PATH}/scripts/github-pull-request.sh" sed -n '1,120p' "${GITHUB_ACTION_PATH}/scripts/github-pull-request.sh"
 
 # Get the base branch name
 BASE_REF=$(${GITHUB_ACTION_PATH}/scripts/github-pull-request.sh .base.ref)
 printf 'base-ref=%s\n' "${BASE_REF}" >> "${GITHUB_OUTPUT}"
-
-echo "WE ARE PAST GITHUB-PULL-REQUEST.SH"
 
 # Get the base branch SHA. 
 # If .git doesn't exist or branch is null, returns an empty string.
