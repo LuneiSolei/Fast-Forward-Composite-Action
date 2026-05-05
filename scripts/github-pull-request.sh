@@ -39,5 +39,5 @@ do
 done
 
 # Nothing was found
-echo "::error::Nothing was found via ${1}"
+echo "::error::Nothing was found via ${1}."
 exit 1
