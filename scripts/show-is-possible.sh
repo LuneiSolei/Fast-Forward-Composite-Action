@@ -42,7 +42,6 @@ else
   echo -n " it is possible to fast forward \`${BASE_REF}\` (${BASE_SHA})"
   echo -n " to \`${HEAD_REF}\` (${HEAD_SHA}), but you don't appear to have"
   echo " permission to push to this repository."
-fi
 else
 # Fast-forwarding is possible, but "merge" is disabled
 echo -n "It is possible to fast forward \`${BASE_REF}\` (${BASE_SHA})"
