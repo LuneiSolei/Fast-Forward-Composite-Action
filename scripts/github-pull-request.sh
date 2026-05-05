@@ -1,7 +1,7 @@
 #! /bin/bash
 
 set -e
-echo "calling: ${GITHUB_ACTION_PATH}/scripts/github-pull-request.sh" ls -l "${GITHUB_ACTION_PATH}/scripts/github-pull-request.sh" sed -n '1,120p' "${GITHUB_ACTION_PATH}/scripts/github-pull-request.sh"
+
 # Create a temp file for storing metadata
 GITHUB_PR=$(mktemp)
 
