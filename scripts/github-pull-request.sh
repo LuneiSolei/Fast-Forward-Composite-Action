@@ -15,11 +15,11 @@ PR_URL="$(${GITHUB_ACTION_PATH}/scripts/github-event.sh .issue.pull_request.url 
 
 # Using our newly found URL, get the full PR object
 curl --silent --show-error --location --globoff \
--X GET \
--H "Accept: application/vnd.github+json" \
--H "Authorization: Bearer ${GITHUB_TOKEN}" \
--H "X-GitHub-Api-Version: 2026-03-10" \
-"${PR_URL}" >"${GITHUB_PR}"
+  -X GET \
+  -H "Accept: application/vnd.github+json" \
+  -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+  -H "X-GitHub-Api-Version: 2026-03-10" \
+  "${PR_URL}" >"${GITHUB_PR}"
 
 echo "::debug::PR data structure:"
 jq '.' <"${GITHUB_PR}" >&2
