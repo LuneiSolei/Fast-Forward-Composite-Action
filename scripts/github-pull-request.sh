@@ -36,7 +36,6 @@ do
     fi
 
     # This was empty, try the next path
-    ${1} >> ${}
     shift
 done
 
