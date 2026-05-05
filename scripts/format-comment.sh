@@ -5,9 +5,6 @@ LOG=$(mktemp)
 {
   # Create a local branch reference for the PR
   git branch -f "pull_request/${HEAD_REF}" "${HEAD_SHA}"
-#!/bin/bash
-
-set -e
 
   # Display dynamic message depending on if "merge" is enabled
   case "${AUTO_MERGE}" in
