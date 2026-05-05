@@ -12,8 +12,6 @@ printf '%s\n' "Triggered from $(${GITHUB_ACTION_PATH}/scripts/github-event.sh .c
 .pull_request.html_url) by [@&ZeroWidthSpace;${GITHUB_ACTOR}](https://github.com/$GITHUB_ACTOR)." \
 >> "${GITHUB_STEP_SUMMARY}"
 
-echo "::debug::Token: ${GITHUB_TOKEN}"
-
 # Get the base branch name
 BASE_REF=$(${GITHUB_ACTION_PATH}/scripts/github-pull-request.sh .base.ref)
 printf 'base-ref=%s\n' "${BASE_REF}" >> "${GITHUB_OUTPUT}"
