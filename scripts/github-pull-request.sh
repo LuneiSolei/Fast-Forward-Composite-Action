@@ -4,7 +4,8 @@ set -e
 
 # Create a temp file for storing metadata
 GITHUB_PR=$(mktemp)
-echo "WE'RE HERE"
+
+echo "WE'RE IN GITHUB-PULL-REQUEST.SH"
 
 # Returns the first non-null value from the provided paths
 # Attempt to get PR URL from issue_comment first, then pull_request event data
@@ -13,8 +14,6 @@ PR_URL="$(${GITHUB_ACTION_PATH}/scripts/github-event.sh .issue.pull_request.url 
   echo "::error::Unable to find pull request's context."
   exit 1
 }
-
-
 
 # Using our newly found URL, get the full PR object
 curl --silent --show-error --location --globoff \
