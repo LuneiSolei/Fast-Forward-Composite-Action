@@ -19,7 +19,7 @@ curl --silent --show-error --location --globoff \
 -H "Accept: application/vnd.github+json" \
 -H "Authorization: Bearer ${GITHUB_TOKEN}" \
 -H "X-GitHub-Api-Version: 2026-03-10" \
-"${PR_URL}" >${GITHUB_PR}
+"${PR_URL}" >"${GITHUB_PR}"
 
 echo "::debug::pull_request (${GITHUB_PR}):"
 
@@ -27,7 +27,7 @@ echo "::debug::pull_request (${GITHUB_PR}):"
 # the first non-null value from the provided paths
 while [[ "$#" -gt 0 ]]
 do
-    VALUE=$(jq -r "$1" <${GITHUB_PR})
+    VALUE=$(jq -r "${1}" <"${GITHUB_PR}")
     if [ -n "${VALUE}" ] && [ "${VALUE}" != null ]
     then
         echo "${VALUE}"
@@ -39,4 +39,5 @@ do
 done
 
 # Nothing was found
+echo "::error::Nothing was found via "
 exit 1
