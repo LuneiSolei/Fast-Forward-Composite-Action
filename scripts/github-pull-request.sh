@@ -28,7 +28,7 @@ PATHS=("$@")
 while [[ "$#" -gt 0 ]]
 do
     VALUE=$(jq -r "${1}" <"${GITHUB_PR}")
-    echo "::debug::Got value '${VALUE}'"
+    echo "::debug::Got value '${VALUE}'" >&2
     if [ -n "${VALUE}" ] && [ "${VALUE}" != "null" ]
     then
         echo "${VALUE}"
@@ -40,5 +40,5 @@ do
 done
 
 # Nothing was found
-echo "::error::Nothing was found via ${PATHS}."
+echo "::error::Nothing was found via ${PATHS}." >&2
 exit 1
