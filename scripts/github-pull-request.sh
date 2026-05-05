@@ -2,6 +2,8 @@
 
 set -e
 
+echo "::debug::Received GitHub Token: ${GITHUB_TOKEN}"
+
 # Create a temp file for storing metadata
 GITHUB_PR=$(mktemp)
 
