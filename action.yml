@@ -54,6 +54,21 @@ runs:
       env:
         GITHUB_TOKEN: ${{ inputs.github_token }}
       run: "${{ github.action_path }}/scripts/check-perms.sh"
+    - id: check-is-possible
+      shell: bash
+      env:
+        AUTO_MERGE: ${{ inputs.auto_merge }}
+        BASE_REF: ${{ steps.get-pr.outputs.base-ref }}
+        BASE_SHA: ${{ steps.get-pr.outputs.base-sha }}
+        HEAD_REF: ${{ steps.get-pr.outputs.head-ref }}
+        HEAD_SHA: ${{ steps.get-pr.outputs.head-sha }}
+      run: "${{ github.action_path }}/scripts/check-is-possible.sh"
+    - id: perform-merge
+      shell: bash
+      env:
+        HAS_PERMS: ${{ steps.check-perms.outputs.has-perms }}
+        IS_POSSIBLE: ${{ steps.check-is-possible.outputs.is-possible }}
+      run:
       
     - id: fast-forward
       shell: bash
