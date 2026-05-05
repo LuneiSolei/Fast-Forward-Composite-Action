@@ -1,7 +1,7 @@
 #! /bin/bash
 
 set -e
-
+echo "script path: ${BASH_SOURCE[0]}"; ls -l "${BASH_SOURCE[0]}"
 # Create a temp file for storing metadata
 GITHUB_PR=$(mktemp)
 
