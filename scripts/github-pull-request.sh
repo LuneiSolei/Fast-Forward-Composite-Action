@@ -1,11 +1,9 @@
 #! /bin/bash
 
 set -e
-echo "script path: ${BASH_SOURCE[0]}"; ls -l "${BASH_SOURCE[0]}"
+echo "calling: ${GITHUB_ACTION_PATH}/scripts/github-pull-request.sh" ls -l "${GITHUB_ACTION_PATH}/scripts/github-pull-request.sh" sed -n '1,120p' "${GITHUB_ACTION_PATH}/scripts/github-pull-request.sh"
 # Create a temp file for storing metadata
 GITHUB_PR=$(mktemp)
-
-echo "WE'RE IN GITHUB-PULL-REQUEST.SH"
 
 # Returns the first non-null value from the provided paths
 # Attempt to get PR URL from issue_comment first, then pull_request event data
