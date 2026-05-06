@@ -100,5 +100,7 @@ fi
 {
   echo "comment-body<<EOF"
   cat "${COMMENT_FILE}"
+  echo ""
+  cat "${PUSH_LOG}"
   echo "EOF"
 } >> "${GITHUB_OUTPUT}"
