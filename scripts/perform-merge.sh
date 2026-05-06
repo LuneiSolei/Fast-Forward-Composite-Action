@@ -22,3 +22,10 @@ then
     echo '```'
   } 2>&1 | tee "${PUSH_LOG}"
 fi
+
+# Write to GitHub output
+{
+  echo "push-output<<EOF"
+  cat "${PUSH_LOG}"
+  echo "EOF"
+} >> "${GITHUB_OUTPUT}"
