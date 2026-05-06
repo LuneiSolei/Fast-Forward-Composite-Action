@@ -96,6 +96,7 @@ then
   echo "EXIT_CODE=0" >> ${GITHUB_ENV}
 fi
 
+COMMENT_CONTENT=$(mktemp)
 # Write to GitHub output
 {
   echo "comment-body<<EOF"
@@ -103,4 +104,26 @@ fi
   echo ""
   cat "${PUSH_LOG}"
   echo "EOF"
-} >> "${GITHUB_OUTPUT}"
+} >> "${COMMENT_CONTENT}"
+
+# Determine whether to post the comment based on the setting
+if [ "${COMMENT}" = "always" ] || [ "${COMMENT}" = "on-error" -a "$(cat ${EXIT_CODE})" -ne 0 ]
+then
+  # Post the comment.
+  COMMENTS_URL="$(${GITHUB_ACTION_PATH}/scripts/github-pull-request.sh .comments_url)"
+  if [ -n "${COMMENTS_URL}" ]
+  then
+    echo "Posting comment to ${COMMENTS_URL}."
+    curl --silent --show-error --location --globoff \
+      -X POST \
+      -H "Accept: application/vnd.github+json" \
+      -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+      -H "X-GitHub-Api-Version: 2026-03-10" \
+      "${COMMENTS_URL}" \
+      -d "@${COMMENT_CONTENT}"
+  else
+      echo "::error::Can't post a comment: github.event.pull_request.comments_url is not set." | tee -a ${GITHUB_STEP_SUMMARY}
+  fi
+else
+    echo "Not posting comment."
+fi
