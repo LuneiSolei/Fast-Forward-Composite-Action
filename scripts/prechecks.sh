@@ -16,7 +16,7 @@ esac
 # Ensure GITHUB_TOKEN is set
 if [[ -z "${GITHUB_TOKEN}" ]]
 then
-  printf '::error::Invalid value \'%s\' for GITHUB_TOKEN\n' "${GITHUB_TOKEN}" >&2
+  printf '::error::GITHUB_TOKEN cannot be empty' >&2
   exit 1
 else
   printf 'GITHUB_TOKEN=%s\n' "${GITHUB_TOKEN}" >> "${GITHUB_ENV}"
