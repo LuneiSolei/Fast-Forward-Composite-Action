@@ -28,7 +28,7 @@ case "${AUTO_MERGE}" in
     printf 'AUTO_MERGE=%s\n' "${AUTO_MERGE}" >> "${GITHUB_ENV}"
     ;;
   *)
-    printf '::error::Invalid value for \'%s\' for AUTO_MERGE\n' "${AUTO_MERGE}" >&2
+    printf '::error::Invalid value \'%s\' for AUTO_MERGE\n' "${AUTO_MERGE}" >&2
     exit 1
     ;;
 esac
