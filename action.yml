@@ -36,48 +36,21 @@ runs:
     - id: prechecks
       shell: bash
       env: 
-        DEBUG: ${{ inputs.debug }}
         COMMENT: ${{ inputs.comment }}
         GITHUB_TOKEN: ${{ inputs.github_token }}
         AUTO_MERGE: ${{ inputs.auto_merge }}
       run: "${{ github.action_path }}/scripts/prechecks.sh"
     - id: get-pr
       shell: bash
-      env:
-        GITHUB_TOKEN: ${{ inputs.github_token }}
       run: "${{ github.action_path }}/scripts/get-pr.sh"
     - id: verify-state
       shell: bash
-      env:
-        AUTO_MERGE: ${{ inputs.auto_merge }}
-        BASE_REF: ${{ steps.get-pr.outputs.base-ref }}
-        BASE_SHA: ${{ steps.get-pr.outputs.base-sha }}
-        GITHUB_TOKEN: ${{ inputs.github_token }}
-        HEAD_REF: ${{ steps.get-pr.outputs.head-ref }}
-        HEAD_SHA: ${{ steps.get-pr.outputs.head-sha }}
       run: "${{ github.action_path }}/scripts/verify-state.sh"
-    - id: perform-merge
-      shell: bash
-      env:
-        AUTO_MERGE: ${{ inputs.auto_merge }}
-        BASE_REF: ${{ steps.get-pr.outputs.base-ref }}
-        BASE_SHA: ${{ steps.get-pr.outputs.base-sha }}
-        GITHUB_TOKEN: ${{ inputs.github_token }}
-        HAS_PERMS: ${{ steps.check-perms.outputs.has-perms }}
-        HEAD_REF: ${{ steps.get-pr.outputs.head-ref }}
-        HEAD_SHA: ${{ steps.get-pr.outputs.head-sha }}
-        IS_POSSIBLE: ${{ steps.check-is-possible.outputs.is-possible }}
-      run: "${{ github.action_path }}/scripts/perform-merge.sh"
-      
     - id: fast-forward
       shell: bash
-      env:
-        DEBUG: ${{ inputs.debug }}
-        COMMENT: ${{ inputs.comment }}
-        GITHUB_TOKEN: ${{ inputs.github_token }}
-        AUTO_MERGE: ${{ inputs.auto_merge }}
-        BASE_REF: ${{ steps.get-pr.outputs.base-ref }}
-        BASE_SHA: ${{ steps.get-pr.outputs.base-sha }}
-        HEAD_REF: ${{ steps.get-pr.outputs.head-ref }}
-        HEAD_SHA: ${{ steps.get-pr.outputs.head-sha }}
       run: "${{ github.action_path }}/scripts/fast-forward.sh"
+    - id: post-comment
+      shell: bash
+      env:
+        PUSH_LOG: ${{ steps.fast-forward.outputs.push-log }}
+      run: "${{ github.action_path }}/scripts/post-comment.sh"
