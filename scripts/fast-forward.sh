@@ -7,7 +7,7 @@ if [[ "${HAS_PERMS}" == "true" ]] && [[ "${IS_POSSIBLE}" == "true" ]] && [[ "${A
 then
   {
     printf "Fast Forwarding \`%s\` (%s) to " "${BASE_REF}" "${BASE_SHA}"
-    printf "\`%s\` (%s)." "${HEAD_REF}" "(${HEAD_SHA})"
+    printf "\`%s\` (%s)." "${HEAD_REF}" "${HEAD_SHA}"
   
     printf "\`\`\`shell\n"
     (
@@ -19,13 +19,13 @@ then
       # This fast-forwards BASE_REF to point to HEAD_SHA
       git push origin "${HEAD_SHA}:${BASE_REF}"
     )
-    printf "\`\`\`"
+    printf "\`\`\`\n"
   } 2>&1 | tee "${PUSH_LOG}"
 fi
 
 # Write to GitHub output
 {
-  printf "push-log<<EOF"
+  printf "push-log<<EOF\n"
   cat "${PUSH_LOG}"
   printf "EOF"
 } >> "${GITHUB_OUTPUT}"
