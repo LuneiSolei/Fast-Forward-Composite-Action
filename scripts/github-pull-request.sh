@@ -7,9 +7,9 @@ GITHUB_PR=$(mktemp)
 
 # Returns the first non-null value from the provided paths
 # Attempt to get PR URL from issue_comment first, then pull_request event data
-PR_URL="$(${GITHUB_ACTION_PATH}/scripts/github-event.sh .issue.pull_request.url .pull_request.url)" || {
+PR_URL="$("${GITHUB_ACTION_PATH}"/scripts/github-event.sh .issue.pull_request.url .pull_request.url)" || {
   # Nothing was found
-  printf "::error::Unable to find pull request's context." >&2
+  printf "::error::Unable to find pull request's context." >> "${GITHUB_STEP_SUMMARY}" >&2
   exit 1
 }
 
@@ -39,5 +39,5 @@ do
 done
 
 # Nothing was found
-printf "::error::Nothing was found via %s\n" "${PATHS}" >&2
+printf "::error::Nothing was found via %s\n" "${PATHS[@]}" >&2
 exit 1
