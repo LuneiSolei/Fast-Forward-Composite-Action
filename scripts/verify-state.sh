@@ -16,7 +16,7 @@ curl --silent --show-error -o "${PERM}" --location --globoff \
   -H "X-GitHub-Api-Version: 2026-03-10" \
   "${COLLABORATORS_URL}/$("${GITHUB_ACTION_PATH}"/scripts/github-event.sh .sender.login)/permission"
 
-cat "${COLLABORATORS_URL}/$("${GITHUB_ACTION_PATH}"/scripts/github-event.sh .sender.login)/permission"
+echo "${COLLABORATORS_URL}/$("${GITHUB_ACTION_PATH}"/scripts/github-event.sh .sender.login)/permission"
 
 # Output push permissions state
 printf "HAS_PERMS=%s\n" "$(jq -r .user.permissions.push < "${PERM}")" >> "${GITHUB_ENV}"
