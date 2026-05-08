@@ -100,30 +100,27 @@ then
   {
     printf "It is possible to fast forward \`%s\` (%s) " "${BASE_REF}" "${BASE_SHA}"
     printf "to \`%s\` (%s). If you have write access to the " "${HEAD_REF}" "${HEAD_SHA}"
-    printf "target repository, you can add the comment \`/fastforward\` to fast forward "
+    printf "target repository, you can add the comment \`/fast-forward\` to fast forward "
     printf "\`%s\` to \`%s\`.\n" "${BASE_REF}" "${HEAD_REF}"
   } >> "${COMMENT_POST}"
 
   echo "SHOULD_EXIT=true"
 fi
 
-COMMENT_CONTENT=$(mktemp)
-# Write to GitHub output
-{
-  printf "body<<EOF\n"
-  cat "${COMMENT_POST}"
-  printf "\n"
-  cat "${PUSH_LOG}"
-  printf "\n"
-} >> "${COMMENT_CONTENT}"
-
 # Determine whether to post the comment based on the setting
 if [[ "${COMMENT}" = "always" ]] || { [[ "${COMMENT}" = "on-error" ]] && [[ "${SHOULD_EXIT}" = "true" ]] }
 then
+
   # Post the comment.
   COMMENTS_URL="$("${GITHUB_ACTION_PATH}"/scripts/github-pull-request.sh .comments_url)"
   if [ -n "${COMMENTS_URL}" ]
   then
+    # Construct JSON comment
+    COMMENT_CONTENT=$(mktemp)
+    jq -n --rawfile body "${COMMENT_POST}" --rawfile log "${PUSH_LOG}" \
+    '{body: ($body + "\n\n" + $log)}' > "${COMMENT_CONTENT}"
+
+    # Post the comment
     printf "Posting comment to %s." "${COMMENTS_URL}"
     curl --silent --show-error --location --globoff \
       -X POST \
