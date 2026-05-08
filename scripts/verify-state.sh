@@ -13,7 +13,7 @@ then
 else
   # Build URL used to check for permissions
   COLLABORATORS_URL="$("${GITHUB_ACTION_PATH}"/scripts/github-event.sh .repository.collaborators_url)"
-  COLLABORATORS_URL="${COLLABORATORS_URL}/${USERNAME}"
+  COLLABORATORS_URL="${COLLABORATORS_URL/\{\/collaborator\}/}/${USERNAME}"
 fi
 
 
