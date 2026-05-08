@@ -73,7 +73,8 @@ then
     } >> "${COMMENT_POST}"
   fi
 
-  printf "\nRebase locally and then force push to \`%s\`.\n" "${HEAD_REF}" >> "${COMMENT_POST}"
+  printf "\nRebase \`%s\` onto \`%s\` and then force push to \`%s\`.\n" "${HEAD_REF}" "${BASE_REF}" "${HEAD_REF}" \
+  >> "${COMMENT_POST}"
 elif [[ "${AUTO_MERGE}" == "false" ]]
 then
   # Fast-forwarding is possible, but "auto merge" is disabled
