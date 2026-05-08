@@ -15,15 +15,15 @@ COMMENT_POST=$(mktemp)
       printf "Checking if we can "
       ;;
   esac
-  
+
   printf "fast forward \`%s\ (%s) to \%s\ (%s).\n\n" "${BASE_REF}" "${BASE_SHA}" "${HEAD_REF}" "${HEAD_SHA}"
-  
+
   # Show the current state of the target branch
   printf "Target branch (\`%s\`):\n\n" "${BASE_REF}"
   printf "\`\`\`shell\n"
   git log --decorate=short -n 1 "${BASE_SHA}"
   printf "\`\`\`\n\n"
-  
+
   # Show the current state of the head branch
   printf "Pull request (\`%s\`):\n\n" "${HEAD_REF}"
   printf "\`\`\`shell\n"
@@ -51,7 +51,7 @@ then
       printf "Branches appear to have diverged at %s\n\n" "${MERGE_BASE}"
       printf "\`\`\`shell\n"
     } >> "${COMMENT_POST}"
-  
+
     # If ${MERGE_BASE} is a root (has no parent), then it is not a valid reference
     if git cat-file -t "${MERGE_BASE}^" &>/dev/null
     then
@@ -82,7 +82,7 @@ then
     "${HEAD_SHA}"
     printf "but 'auto_merge' has been disabled.\n"
   } >> "${COMMENT_POST}"
-  
+
   echo "SHOULD_EXIT=true"
 elif [[ "${HAS_PERMS}" == "false" ]]
 then
@@ -93,7 +93,7 @@ then
     printf "\`%s\` (%s), but you don't appear to have " "${HEAD_REF}" "${HEAD_SHA}"
     printf "permission to push to this repository.\n"
   } >> "${COMMENT_POST}"
-  
+
   echo "SHOULD_EXIT=true"
 elif [[ -n "${MERGE_COMMAND}" ]]
 then
@@ -103,14 +103,14 @@ then
     printf "target repository, you can add the comment \`/fastforward\` to fast forward "
     printf "\`%s\` to \`%s\`.\n" "${BASE_REF}" "${HEAD_REF}"
   } >> "${COMMENT_POST}"
-  
+
   echo "SHOULD_EXIT=true"
 fi
 
 COMMENT_CONTENT=$(mktemp)
 # Write to GitHub output
 {
-  printf "comment-body<<EOF\n"
+  printf "body<<EOF\n"
   cat "${COMMENT_POST}"
   printf "\n"
   cat "${PUSH_LOG}"
