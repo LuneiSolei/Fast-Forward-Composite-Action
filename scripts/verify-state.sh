@@ -17,7 +17,7 @@ else
   COLLABORATORS_URL="${COLLABORATORS_URL%}/${USERNAME}"
 fi
 
-
+echo "${COLLABORATORS_URL}"
 
 # Fetch the user's permissions from GitHub API
 PERM=$(mktemp)
@@ -26,8 +26,6 @@ curl --silent --show-error -o "${PERM}" --location --globoff \
   -H "Authorization: Bearer ${GITHUB_TOKEN}" \
   -H "X-GitHub-Api-Version: 2026-03-10" \
   "${COLLABORATORS_URL}"
-
-echo "${COLLABORATORS_URL}"
 
 # Output push permissions state
 printf "HAS_PERMS=%s\n" "$(jq -r '(.user.permissions.maintain // false) or (.user.permissions.admin // false)' < "${PERM}")" >> "${GITHUB_ENV}"
