@@ -23,12 +23,15 @@ then
       git push origin "${HEAD_SHA}:${BASE_REF}"
     )
     printf "\`\`\`\n"
-  } 2>&1 | tee -a "${GITHUB_STEP_SUMMARY}" | tee "${PUSH_LOG}"
+  } | tee "${PUSH_LOG}"
 fi
 
-echo "PUSH_LOG path ${PUSH_LOG}"
-printf "PUSH_LOG contents: %s\n" "$(cat "${PUSH_LOG}")"
+SAFE_LOG=$(mktemp)
+sed "s/${GITHUB_TOKEN}/[REDACTED]/g" "${PUSH_LOG}" > "${SAFE_LOG}"
 
+echo "PUSH_LOG path ${SAFE_LOG}"
+printf "PUSH_LOG contents: %s\n" "$(cat "${SAFE_LOG}")"
 
 # Write to GitHub output
-printf "PUSH_LOG=%s\n" "${PUSH_LOG}" >> "${GITHUB_ENV}"
+printf "PUSH_LOG=%s\n" "${SAFE_LOG}" >> "${GITHUB_ENV}"
+printf "%s" "$(cat "${SAFE_LOG}")" >> "${GITHUB_STEP_SUMMARY}"
