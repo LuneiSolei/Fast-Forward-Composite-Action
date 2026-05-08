@@ -7,7 +7,7 @@ if [[ "${HAS_PERMS}" == "true" ]] && [[ "${IS_POSSIBLE}" == "true" ]] && [[ "${A
 then
   {
     printf "Fast Forwarding \`%s\` (%s) to " "${BASE_REF}" "${BASE_SHA}"
-    printf "\`%s\` (%s)." "${HEAD_REF}" "${HEAD_SHA}"
+    printf "\`%s\` (%s).\n" "${HEAD_REF}" "${HEAD_SHA}"
   
     printf "\`\`\`shell\n"
     (
