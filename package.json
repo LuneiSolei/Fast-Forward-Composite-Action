@@ -1,0 +1,27 @@
+{
+    "name": "fast-forward-blossom-bot",
+    "version": "1.0.0",
+    "description": "A GitHub Action to validate and fast forward your repo's pull requests.",
+    "homepage": "https://github.com/LuneiSolei/Fast-Forward-Blossom-Bot#readme",
+    "bugs": {
+        "url": "https://github.com/LuneiSolei/Fast-Forward-Blossom-Bot/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/LuneiSolei/Fast-Forward-Blossom-Bot.git"
+    },
+    "license": "MIT",
+    "author": "Lunei Solei",
+    "type": "commonjs",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "devDependencies": {
+        "typedoc": "^0.28.19"
+    },
+    "dependencies": {
+        "@actions/core": "^3.0.1",
+        "@actions/github": "^9.1.1"
+    }
+}
