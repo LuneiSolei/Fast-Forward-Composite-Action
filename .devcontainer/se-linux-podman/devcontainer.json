@@ -1,0 +1,32 @@
+{
+    "name": "FastForwardBlossomBot DevContainer",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "initializeCommand": "sh .devcontainer/se-linux-podman/export-gpg-keys.sh ${localWorkspaceFolder}",
+    "postCreateCommand": "sh .devcontainer/se-linux-podman/import-gpg-keys.sh ${localWorkspaceFolderBasename}",
+    "forwardPorts": [8080, 8443],
+    "remoteUser": "node",
+    "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/${localWorkspaceFolderBasename},type=bind,options=Z",
+    "mounts": [
+        "source=${localEnv:XDG_RUNTIME_DIR}/gnupg/S.gpg-agent.extra,target=/home/node/.gnupg/S.gpg-agent,type=bind"
+    ],
+    "runArgs": [
+        "--userns=keep-id:uid=1000,gid=1000",
+        "--security-opt",
+        "label=disable"
+    ],
+    "customizations": {
+        "jetbrains": {
+            "settings": {
+                "com.intellij:app:Vcs-Log-App-Settings.show_changes_from_parents": true,
+                "com.intellij:app:HttpConfigurable.use_proxy_pac": true,
+                "JavaScript:app:JSEditorOptions.automatically_replace_with_template_string_on_typing": false,
+                "JavaScript:app:JSEditorOptions.escape_pasted_text": false,
+                "JavaScript:app:JSEditorOptions.close_html_single_tags": false,
+                "JavaScript:app:JSEditorOptions.escape_doc_on_copy_paste": false
+            }
+        }
+    }
+}
