@@ -24,7 +24,7 @@ fi
 
 # Ensure AUTO_MERGE is valid
 case "${AUTO_MERGE}" in
-  true|false) 
+  true|false)
     printf "AUTO_MERGE=%s\n" "${AUTO_MERGE}" >> "${GITHUB_ENV}"
     ;;
   *)

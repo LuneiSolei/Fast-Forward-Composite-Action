@@ -1,0 +1,17 @@
+name: workflow.yml
+on:
+    pull_request:
+        branches:
+            - test_target
+            - test_base
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses: ./
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  auto_merge: false
+                  comment: "always"

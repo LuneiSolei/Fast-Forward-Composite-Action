@@ -12,16 +12,22 @@
     },
     "license": "MIT",
     "author": "Lunei Solei",
-    "type": "commonjs",
+    "type": "module",
     "main": "index.js",
     "scripts": {
+        "local-action": "tsc && local-action . dist/main.js .env",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "devDependencies": {
+        "@github/local-action": "^7.0.1",
+        "@types/node": "^25.7.0",
         "typedoc": "^0.28.19"
     },
     "dependencies": {
         "@actions/core": "^3.0.1",
-        "@actions/github": "^9.1.1"
+        "@actions/exec": "^3.0.0",
+        "@actions/github": "^9.1.1",
+        "@octokit/auth-app": "^8.2.0",
+        "@octokit/webhooks-types": "^7.6.1"
     }
 }

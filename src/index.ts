@@ -1,5 +1,4 @@
-import * as core from '@actions/core';
+import Main from "./main.js"
+import * as core from "@actions/core"
 
-class something {
-    constructor(public name: string) { }
-}
+Main.run().catch(err => core.error(err.message));

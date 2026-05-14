@@ -1,54 +1,60 @@
-name: Fast Forward Composite Action
-description: Fast forward the target branch from a pull request.
-author: Lunei Solei
+name: "Fast Forward Composite Action"
+description: "Fast forward the target branch from a pull request."
+author: "Lunei Solei"
 inputs:
-  github_token:
-    description: The GitHub token for this action to use.
-    required: true
-  auto_merge:
-    description: >
-      Boolean that determines if the target branch should be automatically
-      fast forwarded after determining that a pull request is eligible to do so.
-    default: false
-  comment:
-    description: >
-      "always" - Posts a comment to the pull request indicating whether
-      it is possible to fast-forward the target branch, and, if merge 
-      is true, whether fast forwarding succeeded.
+    github_token:
+        required: true
+        description: "The GitHub token for this action to use."
+    auto_merge:
+        required: true
+        description: >
+            "Boolean that determines if the target branch should be automatically
+            fast forwarded after determining that a pull request is eligible to do so."
+    comment:
+        required: true
+        description: >
+            "always" - Posts a comment to the pull request indicating whether
+            it is possible to fast-forward the target branch, and, if merge 
+            is true, whether fast forwarding succeeded.
+            
+            "on-error" - A comment is only posted if an error occurs.
+            
+            "never" - No comment is posted. The comment is still available 
+            via the comment output variable and in the step's summary.
+        default: "on-error"
 
-      "on-error" - A comment is only posted if an error occurs.
-
-      "never" - No comment is posted. The comment is still available 
-      via the comment output variable and in the step's summary.
-    default: on-error
-
-outputs:
-  comment:
-    description: > 
-      A comment explaining whether fast forwarding is possible, and, 
-      if `merge` is true, whether it was successful. The comment is 
-      a JSON document with a single field called `body`.
-    value: "${{ steps.fast-forward.outputs.comment }}"
+#outputs:
+#  comment:
+#    description: >
+#      A comment explaining whether fast forwarding is possible, and,
+#      if `merge` is true, whether it was successful. The comment is
+#      a JSON document with a single field called `body`.
+#    value: "${{ steps.fast-forward.outputs.comment }}"
 
 runs:
-  using: composite
-  steps:
-    - id: prechecks
-      shell: bash
-      env: 
-        COMMENT: ${{ inputs.comment }}
-        GITHUB_TOKEN: ${{ inputs.github_token }}
-        AUTO_MERGE: ${{ inputs.auto_merge }}
-      run: ${{ github.action_path }}/scripts/prechecks.sh
-    - id: get-pr
-      shell: bash
-      run: ${{ github.action_path }}/scripts/get-pr.sh
-    - id: verify-state
-      shell: bash
-      run: ${{ github.action_path }}/scripts/verify-state.sh
-    - id: fast-forward
-      shell: bash
-      run: ${{ github.action_path }}/scripts/fast-forward.sh
-    - id: post-comment
-      shell: bash
-      run: ${{ github.action_path }}/scripts/post-comment.sh
+    using: node20
+    main: dist/index.js
+    steps:
+
+
+
+#  steps:
+#    - id: prechecks
+#      shell: bash
+#      env:
+#        COMMENT: ${{ inputs.comment }}
+#        GITHUB_TOKEN: ${{ inputs.github_token }}
+#        AUTO_MERGE: ${{ inputs.auto_merge }}
+#      run: ${{ github.action_path }}/scripts/prechecks.sh
+#    - id: get-pr
+#      shell: bash
+#      run: ${{ github.action_path }}/scripts/get-pr.sh
+#    - id: verify-state
+#      shell: bash
+#      run: ${{ github.action_path }}/scripts/verify-state.sh
+#    - id: fast-forward
+#      shell: bash
+#      run: ${{ github.action_path }}/scripts/fast-forward.sh
+#    - id: post-comment
+#      shell: bash
+#      run: ${{ github.action_path }}/scripts/post-comment.sh
