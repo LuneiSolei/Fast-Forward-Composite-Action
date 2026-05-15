@@ -1,9 +1,8 @@
 import * as core from "@actions/core";
-
 import {run_prechecks} from "./prechecks.js";
 import {Octokit} from "@octokit/core";
 import Authenticator from "./authenticator.js";
-import get_pr from "./getPR.js";
+import EventParser from "./eventParser.js";
 
 export default class Main
 {
@@ -13,8 +12,11 @@ export default class Main
     public static async run()
     {
         run_prechecks();
-        this._octokit = Authenticator.Octokit
-        this._pr = get_pr(this._octokit);
+
+        // Authenticate
+        const owner = EventParser.GetOwner().login;
+        const repo = EventParser.GetRepository().name;
+        this._octokit = await Authenticator.GetOctokit(owner, repo);
     }
 }
 

@@ -17,3 +17,8 @@ ij_javascript_prefer_explicit_types_function_expression_returns = true
 ij_javascript_prefer_explicit_types_function_returns = true
 ij_javascript_prefer_explicit_types_vars_fields = true
 ij_typescript_use_public_modifier = true
+
+# YAML options
+[*.{yml,yaml}]
+indent_size = 2
+tab_width = 2

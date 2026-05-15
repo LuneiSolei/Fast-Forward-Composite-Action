@@ -1,0 +1,50 @@
+$schema: 'http://json-schema.org/draft-07/schema'
+type: object
+required:
+  - action
+  - number
+  - pull_request
+  - repository
+  - sender
+properties:
+  action:
+    type: string
+    enum:
+      - opened
+  number:
+    type: integer
+    description: The pull request number.
+  pull_request:
+    allOf:
+      - $ref: '#/definitions/pull-request'
+      - type: object
+        required:
+          - state
+          - closed_at
+          - merged_at
+          - active_lock_reason
+          - merged_by
+        properties:
+          state:
+            type: string
+            enum:
+              - open
+          closed_at:
+            type: 'null'
+          merged_at:
+            type: 'null'
+          active_lock_reason:
+            type: 'null'
+          merged_by:
+            type: 'null'
+        tsAdditionalProperties: false
+  repository:
+    $ref: '#/definitions/repository'
+  installation:
+    $ref: '#/definitions/installation-lite'
+  organization:
+    $ref: '#/definitions/organization'
+  sender:
+    $ref: '#/definitions/user'
+additionalProperties: false
+title: pull_request opened event
