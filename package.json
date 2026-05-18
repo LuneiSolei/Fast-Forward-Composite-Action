@@ -15,13 +15,17 @@
     "type": "module",
     "main": "index.js",
     "scripts": {
-        "local-action": "local-action . dist/main.js .env",
+        "generate-app-token": "local-action . dist/local/generate-installation-token.js .env",
+        "local-action": "local-action . dist/src/main.js .env",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "devDependencies": {
         "@github/local-action": "^7.0.1",
+        "@octokit/app": "^16.1.2",
         "@types/js-yaml": "^4.0.9",
+        "@types/jsonwebtoken": "^9.0.10",
         "@types/node": "^25.7.0",
+        "jsonwebtoken": "^9.0.3",
         "typedoc": "^0.28.19"
     },
     "dependencies": {
